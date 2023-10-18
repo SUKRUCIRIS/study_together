@@ -1,0 +1,23 @@
+{
+  "name": "studytogether",
+  "version": "1.0.0",
+  "description": "study together app cross platform desktop",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SUKRUCIRIS/study_together.git"
+  },
+  "author": "Şükrü Çiriş, Emircan Uzun, Barış Engin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SUKRUCIRIS/study_together/issues"
+  },
+  "homepage": "https://github.com/SUKRUCIRIS/study_together#readme",
+  "dependencies": {
+    "electron": "^27.0.0"
+  }
+}
