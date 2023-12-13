@@ -27,8 +27,8 @@ college_id,file_id,tag,password)
 13-KULLANICININ BAĞLANTILARINI GETİR: user_id->list(user_id, connection_id)
 14-KULLANICININ GRUPLARINI GETİR: user_id->list(group_id)
 
-15-KULLANICIYA HIGHSCOOL EKLE: (user_id, highschool_id)->void
-16-KULLANICIYA COLLEGE EKLE: (user_id, college_id)->void
+15-KULLANICIYA HIGHSCOOL EKLE: (user_id, highschool_id, start_date, finish_date)->void
+16-KULLANICIYA COLLEGE EKLE: (user_id, college_id, start_date, finish_date)->void
 
 17-GRUP BİLGİLERİNİ GETİR: group_id->(file_id, name, about, taglist)
 18-GRUP TEXT KANALLARINI GETİR: group_id->list(tc_id, name)
