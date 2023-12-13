@@ -1,0 +1,58 @@
+BACKEND İHTİYAÇLARI:
+1-KULLANICI KAYDETME (AŞAĞIDAKİ DEĞERLERİ ALICAK API)->user_id:
+PERSON.name
+PERSON.surname
+PERSON.birth_date
+PERSON.email
+PERSON.telephone
+PERSON.occupation
+PERSON.graduation_level (prehighschool , highschool, college, postcollege şeklinde selectbox olur, backend e string olarak atılır)
+PERSON.about
+
+Eğer prehighschool ise okul seçtirtme, highschool ise highschool seçtirt, üsttekiler için hem highschool hem college seçtirt. sistemde kayıtlı highschool 
+ve collegelar seçilebilir veya other ı seçerek kayıtlı olmayan bir şey de girebilir. 
+eğer bitirmemişse sadece start date seçtirt. eğer bitirmişse finish date de seçtirt. 
+(2- BÜTÜN HİGHSCOOLLARI GETİR void->list(id, name), 3- BÜTÜN COLLEGELARI GETİR void->list(id, name), 4- HIGHSCOOL EKLE(name, telephone, email, adresse)->id, 
+5- COLLEGE EKLE(name, telephone, email, adresse)->id)
+
+USER.file_id (6- FILE (RESİM) EKLEME (name, data)->id, 7- FILE (RESİM) EKLEME GRUP (group_id, name, data)->id)
+USER.password
+
+8-KULLANICI GİRİŞ: (email, password)->user_id
+9-KULLANICI BİLGİLERİ GETİR (user_id)->(name,surname,birth_date,email,telephone,occupation,graduation_level,about,highschool_id,
+college_id,file_id,tag,password)
+10-FILE GETİR: id->(group_id, name, data)
+11-HIGHSCHOOL GETİR: id->(name, telephone, email, adresse)
+12-COLLEGE GETİR: id->(name, telephone, email, adresse)
+13-KULLANICININ BAĞLANTILARINI GETİR: user_id->list(user_id, connection_id)
+14-KULLANICININ GRUPLARINI GETİR: user_id->list(group_id)
+
+15-KULLANICIYA HIGHSCOOL EKLE: (user_id, highschool_id)->void
+16-KULLANICIYA COLLEGE EKLE: (user_id, college_id)->void
+
+17-GRUP BİLGİLERİNİ GETİR: group_id->(file_id, name, about, taglist)
+18-GRUP TEXT KANALLARINI GETİR: group_id->list(tc_id, name)
+19-GRUP SES KANALLARINI GETİR: group_id->list(vc_id, name)
+20-TEXT KANAL MESAJLARINI GETİR: tc_id->list(user_id, data, file_id,created_date)
+21-DİREKT MESAJLARI GETİR: connection_id->list(user_id, data, file_id,created_date)
+
+22-CONNECTION OLUŞTUR: (user_id,user_id)->void
+23-KULLANICI GRUPA GİR: (user_id,group_id)->void
+
+24-GRUBA MESAJ AT: (user_id, tc_id, data, file_id)->void
+25-CONNECTION MESAJ AT: (user_id, connection_id, data, file_id)->void
+
+26-GRUP OLUŞTUR: (user_id(admin grup oluşturan), file_id, name, about, taglist(konu taglerinin virgül ile birleşmiş hali))->group_id
+27-GRUP TC EKLE: (group_id, name)->tc_id
+28-GRUP VC EKLE: (group_id, name)->vc_id
+29-FILE DATA GETİR: file_id->(name, data)
+30-GRUPTAKİ FILE LARI GETİR: group_id->list(file_id)
+31-GRUPTAKİ USERLARI GETİR: group_id->list(user_id)
+32-GRUPTAKİ TESTLERİ GETİR: group_id->list(test_id)
+33-TEST BİLGİLERİ AL: test_id->(group_id, user_id, name, created_date)
+34-TEST OLUŞTUR: (group_id, user_id, name)->test_id
+35-SORULARI GETİR: test_id->list(question_id)
+36-SORU BİLGİLERİ GETİR: question_id->lis(body, a, b, c, d, right, score, number)
+37-SORU OLUŞTUR: (test_id, body, a, b, c, d, right, score, number)->question_id
+38-SKOR OLUŞTUR: (test_id, user_id, score)->void
+39-SKORLARI GETİR: (test_id, user_id)->list(score, created_date)

@@ -73,6 +73,7 @@ CREATE TABLE "USER" (
 
 CREATE TABLE "GROUP" (
 	"id" SERIAL PRIMARY KEY,
+	"user_id" integer NOT NULL,
 	"file_id" integer,
 	"name" varchar NOT NULL,
 	"about" varchar NOT NULL,
