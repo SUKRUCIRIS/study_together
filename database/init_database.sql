@@ -3,7 +3,7 @@ CREATE TABLE "PERSON" (
 	"name" varchar NOT NULL,
 	"surname" varchar NOT NULL,
 	"birth_date" timestamp NOT NULL,
-	"email" varchar NOT NULL,
+	"email" varchar UNIQUE NOT NULL,
 	"telephone" varchar NOT NULL,
 	"occupation" varchar NOT NULL,
 	"graduation_level" varchar NOT NULL,
@@ -16,8 +16,8 @@ CREATE TABLE "PERSON_HIGHSCHOOL" (
 	"id" SERIAL PRIMARY KEY,
 	"person_id" integer NOT NULL,
 	"highschool_id" integer NOT NULL,
-	"start_date" timestamp NOT NULL,
-	"finish_date" timestamp,
+	"hs_start_date" timestamp NOT NULL,
+	"hs_finish_date" timestamp,
 	"created_date" timestamp NOT NULL,
 	"deleted_date" timestamp
 );
@@ -26,8 +26,8 @@ CREATE TABLE "PERSON_COLLEGE" (
 	"id" SERIAL PRIMARY KEY,
 	"person_id" integer NOT NULL,
 	"college_id" integer NOT NULL,
-	"start_date" timestamp NOT NULL,
-	"finish_date" timestamp,
+	"cl_start_date" timestamp NOT NULL,
+	"cl_finish_date" timestamp,
 	"created_date" timestamp NOT NULL,
 	"deleted_date" timestamp
 );
@@ -108,8 +108,8 @@ CREATE TABLE "VOICE_CHANNEL" (
 
 CREATE TABLE "CONNECTION" (
 	"id" SERIAL PRIMARY KEY,
-	"user_id1" integer NOT NULL,
-	"user_id2" integer NOT NULL,
+	"user_id" integer NOT NULL,
+	"connected_user_id" integer NOT NULL,
 	"created_date" timestamp NOT NULL,
 	"deleted_date" timestamp
 );
@@ -187,8 +187,8 @@ ALTER TABLE "TEXT_CHANNEL" ADD FOREIGN KEY ("group_id") REFERENCES "GROUP" ("id"
 
 ALTER TABLE "VOICE_CHANNEL" ADD FOREIGN KEY ("group_id") REFERENCES "GROUP" ("id");
 
-ALTER TABLE "CONNECTION" ADD FOREIGN KEY ("user_id1") REFERENCES "USER" ("id");
-ALTER TABLE "CONNECTION" ADD FOREIGN KEY ("user_id2") REFERENCES "USER" ("id");
+ALTER TABLE "CONNECTION" ADD FOREIGN KEY ("user_id") REFERENCES "USER" ("id");
+ALTER TABLE "CONNECTION" ADD FOREIGN KEY ("connected_user_id") REFERENCES "USER" ("id");
 
 ALTER TABLE "MESSAGE" ADD FOREIGN KEY ("user_id") REFERENCES "USER" ("id");
 ALTER TABLE "MESSAGE" ADD FOREIGN KEY ("text_channel_id") REFERENCES "TEXT_CHANNEL" ("id");

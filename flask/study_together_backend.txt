@@ -1,3 +1,4 @@
+void döndüren diye yazdıklarım aslında eklediği şeyin idsini döndürücek
 BACKEND İHTİYAÇLARI:
 1-KULLANICI KAYDETME (AŞAĞIDAKİ DEĞERLERİ ALICAK API)->user_id:
 PERSON.name
@@ -20,7 +21,7 @@ USER.password
 
 8-KULLANICI GİRİŞ: (email, password)->user_id
 9-KULLANICI BİLGİLERİ GETİR (user_id)->(name,surname,birth_date,email,telephone,occupation,graduation_level,about,highschool_id,
-college_id,file_id,tag,password)
+college_id,highschool_start,highschool_finish,college_start,college_finish,file_id,tag,password)
 10-FILE GETİR: id->(group_id, name, data)
 11-HIGHSCHOOL GETİR: id->(name, telephone, email, adresse)
 12-COLLEGE GETİR: id->(name, telephone, email, adresse)
@@ -30,7 +31,7 @@ college_id,file_id,tag,password)
 15-KULLANICIYA HIGHSCOOL EKLE: (user_id, highschool_id, start_date, finish_date)->void
 16-KULLANICIYA COLLEGE EKLE: (user_id, college_id, start_date, finish_date)->void
 
-17-GRUP BİLGİLERİNİ GETİR: group_id->(file_id, name, about, taglist)
+17-GRUP BİLGİLERİNİ GETİR: group_id->(user_id(admin), file_id, name, about, taglist)
 18-GRUP TEXT KANALLARINI GETİR: group_id->list(tc_id, name)
 19-GRUP SES KANALLARINI GETİR: group_id->list(vc_id, name)
 20-TEXT KANAL MESAJLARINI GETİR: tc_id->list(user_id, data, file_id,created_date)
