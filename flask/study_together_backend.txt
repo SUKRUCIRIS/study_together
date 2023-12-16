@@ -37,7 +37,7 @@ college_id,highschool_start,highschool_finish,college_start,college_finish,file_
 20-TEXT KANAL MESAJLARINI GETİR: tc_id->list(user_id, data, file_id,created_date)
 21-DİREKT MESAJLARI GETİR: connection_id->list(user_id, data, file_id,created_date)
 
-22-CONNECTION OLUŞTUR: (user_id,user_id)->void
+22-CONNECTION OLUŞTUR: (user_id1,user_id2)->void
 23-KULLANICI GRUPA GİR: (user_id,group_id)->void
 
 24-GRUBA MESAJ AT: (user_id, tc_id, data, file_id)->void
