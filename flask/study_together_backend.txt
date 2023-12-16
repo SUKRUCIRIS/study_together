@@ -56,3 +56,4 @@ college_id,highschool_start,highschool_finish,college_start,college_finish,file_
 36-SORU OLUŞTUR: (test_id, body, a, b, c, d, right, score, number)->question_id
 37-SKOR OLUŞTUR: (test_id, user_id, score)->void
 38-SKORLARI GETİR: (test_id, user_id)->list(score, created_date)
+39-BÜTÜN GRUPLARI GETİR: (void)->list(group_id)

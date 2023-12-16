@@ -623,6 +623,14 @@ def getscores_flask():
     return jsonify({"list": qh.query(query_str)})
 
 
+@app.route("/getallgroups", methods=["POST"])
+def getallgroups_flask():
+    query_str = f"""
+	SELECT "GROUP"."id" FROM "GROUP"
+	"""
+    return jsonify({"list": qh.query(query_str)})
+
+
 if __name__ == "__main__":
     from waitress import serve
 
