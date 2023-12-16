@@ -46,14 +46,13 @@ college_id,highschool_start,highschool_finish,college_start,college_finish,file_
 26-GRUP OLUŞTUR: (user_id(admin grup oluşturan), file_id, name, about, taglist(konu taglerinin virgül ile birleşmiş hali))->group_id
 27-GRUP TC EKLE: (group_id, name)->tc_id
 28-GRUP VC EKLE: (group_id, name)->vc_id
-29-FILE DATA GETİR: file_id->(name, data)
-30-GRUPTAKİ FILE LARI GETİR: group_id->list(file_id)
-31-GRUPTAKİ USERLARI GETİR: group_id->list(user_id)
-32-GRUPTAKİ TESTLERİ GETİR: group_id->list(test_id)
-33-TEST BİLGİLERİ AL: test_id->(group_id, user_id, name, created_date)
-34-TEST OLUŞTUR: (group_id, user_id, name)->test_id
-35-SORULARI GETİR: test_id->list(question_id)
-36-SORU BİLGİLERİ GETİR: question_id->lis(body, a, b, c, d, right, score, number)
-37-SORU OLUŞTUR: (test_id, body, a, b, c, d, right, score, number)->question_id
-38-SKOR OLUŞTUR: (test_id, user_id, score)->void
-39-SKORLARI GETİR: (test_id, user_id)->list(score, created_date)
+29-GRUPTAKİ FILE LARI GETİR: group_id->list(file_id)
+30-GRUPTAKİ USERLARI GETİR: group_id->list(user_id)
+31-GRUPTAKİ TESTLERİ GETİR: group_id->list(test_id)
+32-TEST BİLGİLERİ AL: test_id->(group_id, user_id, name, created_date)
+33-TEST OLUŞTUR: (group_id, user_id, name)->test_id
+34-SORULARI GETİR: test_id->list(question_id)
+35-SORU BİLGİLERİ GETİR: question_id->lis(body, a, b, c, d, right, score, number)
+36-SORU OLUŞTUR: (test_id, body, a, b, c, d, right, score, number)->question_id
+37-SKOR OLUŞTUR: (test_id, user_id, score)->void
+38-SKORLARI GETİR: (test_id, user_id)->list(score, created_date)

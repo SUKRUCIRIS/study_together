@@ -10,4 +10,4 @@ COPY ./query.py .
 
 EXPOSE 80
 
-CMD ["sh", "-c", "sleep 30; python app.py;"]
+CMD ["sh", "-c", "sleep 30; python -u app.py;"]

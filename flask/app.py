@@ -475,19 +475,6 @@ def addvoicechannel_flask():
     return jsonify({"id": id})
 
 
-@app.route("/getfile", methods=["POST"])
-def getfile_flask():
-    jsonData = request.get_json()
-    id = jsonData["id"]
-    query_str = f"""
-	SELECT "FILE"."name", "FILE"."data" FROM "FILE"
-    WHERE "FILE"."id"={id}
-	"""
-    row = qh.query(query_str)[0]
-    result = {"name": row[0], "data": row[1]}
-    return jsonify(result)
-
-
 @app.route("/getgroupfiles", methods=["POST"])
 def getgroupfiles_flask():
     jsonData = request.get_json()
