@@ -1,7 +1,7 @@
 FROM python:3.12.1-slim-bookworm
 
 RUN pip install --no-cache-dir --upgrade pip && \
-	pip install --no-cache-dir flask psycopg2-binary waitress
+	pip install --no-cache-dir flask psycopg2-binary waitress flask_cors
 
 WORKDIR /app
 

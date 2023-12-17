@@ -18,6 +18,8 @@ class query_helper:
         self.conn.close()
 
     def query(self, q_str: str):
+        q_str = q_str.replace("None,", "NULL,")
+        q_str = q_str.replace(",None", ",NULL")
         i = 0
         while (
             i < 5

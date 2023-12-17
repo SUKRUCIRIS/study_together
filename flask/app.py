@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
 import query
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "studytogether"
+CORS(app, resources={r"*": {"origins": "*"}})
 
 qh = query.query_helper()
 
@@ -41,7 +43,7 @@ def signup_flask():
     '{occupation}','{graduation_level}','{about}',CURRENT_TIMESTAMP) 
     RETURNING "id" 
     """
-    person_id = qh.query(person_query)[0]
+    person_id = qh.query(person_query)[0][0]
 
     user_query = f"""
 	INSERT INTO "USER" ("file_id","person_id","tag",
@@ -49,7 +51,7 @@ def signup_flask():
     VALUES({file_id},{person_id},'${person_id}',
     '{password}',CURRENT_TIMESTAMP) RETURNING "id"
 	"""
-    user_id = qh.query(user_query)[0]
+    user_id = qh.query(user_query)[0][0]
 
     return jsonify({"id": user_id})
 
@@ -83,7 +85,7 @@ def addhs_flask():
     VALUES ('{name}','{telephone}','{email}','{adresse}',
     CURRENT_TIMESTAMP) RETURNING "id"
 	"""
-    id = qh.query(query_str)[0]
+    id = qh.query(query_str)[0][0]
     return jsonify({"id": id})
 
 
@@ -100,7 +102,7 @@ def addcl_flask():
     VALUES ('{name}','{telephone}','{email}','{adresse}',
     CURRENT_TIMESTAMP) RETURNING "id"
 	"""
-    id = qh.query(query_str)[0]
+    id = qh.query(query_str)[0][0]
     return jsonify({"id": id})
 
 
@@ -113,7 +115,7 @@ def addfile_flask():
 	INSERT INTO "FILE" ("name","data","created_date") 
     VALUES ('{name}','{data}',CURRENT_TIMESTAMP) RETURNING "id"
 	"""
-    id = qh.query(query_str)[0]
+    id = qh.query(query_str)[0][0]
     return jsonify({"id": id})
 
 
@@ -128,7 +130,7 @@ def addfilegroup_flask():
     VALUES ({group_id},'{name}','{data}',CURRENT_TIMESTAMP) 
     RETURNING "id"
 	"""
-    id = qh.query(query_str)[0]
+    id = qh.query(query_str)[0][0]
     return jsonify({"id": id})
 
 
@@ -144,7 +146,7 @@ def signin_flask():
     "USER"."password"='{password}'
 	"""
     try:
-        id = qh.query(query_str)[0]
+        id = qh.query(query_str)[0][0]
         return jsonify({"id": id})
     except:
         return jsonify({"id": None})
@@ -267,14 +269,14 @@ def addhsuser_flask():
 	SELECT "USER"."person_id" FROM "USER" WHERE
     "USER"."id"={user_id}
 	"""
-    person_id = qh.query(query_str)[0]
+    person_id = qh.query(query_str)[0][0]
     query_str = f"""
 	INSER INTO "PERSON_HIGHSCHOOL" ("person_id","highschool_id",
     "hs_start_date","hs_finish_date","created_date")
     VALUES ({person_id},{highschool_id},'{start_date}','{finish_date}',
     CURRENT_TIMESTAMP) RETURNING "id"
 	"""
-    id = qh.query(query_str)[0]
+    id = qh.query(query_str)[0][0]
     return jsonify({"id": id})
 
 
@@ -289,14 +291,14 @@ def addcluser_flask():
 	SELECT "USER"."person_id" FROM "USER" WHERE
     "USER"."id"={user_id}
 	"""
-    person_id = qh.query(query_str)[0]
+    person_id = qh.query(query_str)[0][0]
     query_str = f"""
 	INSER INTO "PERSON_COLLEGE" ("person_id","college_id",
     "cl_start_date","cl_finish_date","created_date")
     VALUES ({person_id},{college_id},'{start_date}','{finish_date}',
     CURRENT_TIMESTAMP) RETURNING "id"
 	"""
-    id = qh.query(query_str)[0]
+    id = qh.query(query_str)[0][0]
     return jsonify({"id": id})
 
 
@@ -383,7 +385,7 @@ def addconnection_flask():
     "created_date") VALUES ({user_id2},{user_id1},CURRENT_TIMESTAMP)
     RETURNING "id"
 	"""
-    id = qh.query(query_str)[0]
+    id = qh.query(query_str)[0][0]
     return jsonify({"id": id})
 
 
@@ -396,7 +398,7 @@ def addusertogroup_flask():
 	INSERT INTO "USER_GROUP" ("group_id","user_id","created_date") 
     VALUES ({group_id},{user_id},CURRENT_TIMESTAMP) RETURNING "id"
 	"""
-    id = qh.query(query_str)[0]
+    id = qh.query(query_str)[0][0]
     return jsonify({"id": id})
 
 
@@ -412,7 +414,7 @@ def addgroupmessage_flask():
     "file_id","created_date") VALUES ({user_id},{tc_id},'{data}',
     {file_id},CURRENT_TIMESTAMP) RETURNING "id"
 	"""
-    id = qh.query(query_str)[0]
+    id = qh.query(query_str)[0][0]
     return jsonify({"id": id})
 
 
@@ -428,7 +430,7 @@ def addconnectionmessage_flask():
     "file_id","created_date") VALUES ({user_id},{connection_id},
     '{data}',{file_id},CURRENT_TIMESTAMP) RETURNING "id"
 	"""
-    id = qh.query(query_str)[0]
+    id = qh.query(query_str)[0][0]
     return jsonify({"id": id})
 
 
@@ -445,7 +447,7 @@ def addgroup_flask():
     "created_date") VALUES ({user_id},{file_id},'{name}','{about}',
     '{taglist}',CURRENT_TIMESTAMP) RETURNING "id"
 	"""
-    id = qh.query(query_str)[0]
+    id = qh.query(query_str)[0][0]
     return jsonify({"id": id})
 
 
@@ -458,7 +460,7 @@ def addtextchannel_flask():
 	INSERT INTO "TEXT_CHANNEL" ("group_id","name","created_date")
     VALUES ({group_id},'{name}',CURRENT_TIMESTAMP) RETURNING "id"
 	"""
-    id = qh.query(query_str)[0]
+    id = qh.query(query_str)[0][0]
     return jsonify({"id": id})
 
 
@@ -471,7 +473,7 @@ def addvoicechannel_flask():
 	INSERT INTO "VOICE_CHANNEL" ("group_id","name","created_date")
     VALUES ({group_id},'{name}',CURRENT_TIMESTAMP) RETURNING "id"
 	"""
-    id = qh.query(query_str)[0]
+    id = qh.query(query_str)[0][0]
     return jsonify({"id": id})
 
 
@@ -534,7 +536,7 @@ def addtest_flask():
     VALUES({group_id},{user_id},'{name}',CURRENT_TIMESTAMP)
     RETURNING "id"
 	"""
-    id = qh.query(query_str)[0]
+    id = qh.query(query_str)[0][0]
     return jsonify({"id": id})
 
 
@@ -591,7 +593,7 @@ def addquestion_flask():
     '{b}','{c}','{d}','{right}',{score},{number},CURRENT_TIMESTAMP)
     RETURNING "id"
 	"""
-    id = qh.query(query_str)[0]
+    id = qh.query(query_str)[0][0]
     return jsonify({"id": id})
 
 
@@ -606,7 +608,7 @@ def addscore_flask():
     VALUES ({test_id},{user_id},{score},CURRENT_TIMESTAMP)
     RETURNING "id"
 	"""
-    id = qh.query(query_str)[0]
+    id = qh.query(query_str)[0][0]
     return jsonify({"id": id})
 
 
