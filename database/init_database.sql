@@ -205,3 +205,89 @@ ALTER TABLE "TEST_USER" ADD FOREIGN KEY ("user_id") REFERENCES "USER" ("id");
 ALTER TABLE "DIRECT_MESSAGE" ADD FOREIGN KEY ("user_id") REFERENCES "USER" ("id");
 ALTER TABLE "DIRECT_MESSAGE" ADD FOREIGN KEY ("connection_id") REFERENCES "CONNECTION" ("id");
 ALTER TABLE "DIRECT_MESSAGE" ADD FOREIGN KEY ("file_id") REFERENCES "FILE" ("id");
+
+DO $$
+
+DECLARE personid integer;
+DECLARE personid2 integer;
+DECLARE userid integer;
+DECLARE userid2 integer;
+DECLARE hsid integer;
+DECLARE clid integer;
+DECLARE groupid integer;
+
+BEGIN
+
+INSERT INTO "HIGHSCHOOL" ("name","telephone","email","adresse",
+"created_date") VALUES ('A Lisesi','212139613','alisesi@lise.com','Cu',
+CURRENT_TIMESTAMP) RETURNING "id" INTO hsid;
+
+INSERT INTO "COLLEGE" ("name","telephone","email","adresse",
+"created_date") VALUES ('X Üniversitesi','212139513','xuni@uni.com','Cu',
+CURRENT_TIMESTAMP) RETURNING "id" INTO clid;
+
+INSERT INTO "PERSON" ("name","surname","birth_date",
+"email","telephone","occupation","graduation_level","about",
+"created_date") VALUES('ŞÜKRÜ', 'ÇİRİŞ',TO_DATE('2000-02-01','YYYY-MM-DD'),
+'sukruciris2000@gmail.com','05370519604','Student','College','Hi',CURRENT_TIMESTAMP) 
+RETURNING "id" INTO personid;
+
+INSERT INTO "PERSON_HIGHSCHOOL" ("person_id","highschool_id","hs_start_date","hs_finish_date","created_date")
+VALUES (personid,hsid,TO_DATE('2014-02-01','YYYY-MM-DD'),TO_DATE('2018-02-01','YYYY-MM-DD'),CURRENT_TIMESTAMP);
+
+INSERT INTO "PERSON_COLLEGE" ("person_id","college_id","cl_start_date","cl_finish_date","created_date")
+VALUES (personid,clid,TO_DATE('2018-02-01','YYYY-MM-DD'),TO_DATE('2024-02-01','YYYY-MM-DD'),CURRENT_TIMESTAMP);
+
+INSERT INTO "USER" ("file_id","person_id","tag","password","created_date")
+VALUES(NULL,personid,'$' || personid,'1396',CURRENT_TIMESTAMP) RETURNING "id" INTO userid;
+
+INSERT INTO "PERSON" ("name","surname","birth_date",
+"email","telephone","occupation","graduation_level","about",
+"created_date") VALUES('Emircan', 'Uzun',TO_DATE('2000-02-01','YYYY-MM-DD'),
+'emircanuzun@gmail.com','05370519604','Student','College','Hi',CURRENT_TIMESTAMP) 
+RETURNING "id" INTO personid2;
+
+INSERT INTO "PERSON_HIGHSCHOOL" ("person_id","highschool_id","hs_start_date","hs_finish_date","created_date")
+VALUES (personid2,hsid,TO_DATE('2014-02-01','YYYY-MM-DD'),TO_DATE('2018-02-01','YYYY-MM-DD'),CURRENT_TIMESTAMP);
+
+INSERT INTO "PERSON_COLLEGE" ("person_id","college_id","cl_start_date","cl_finish_date","created_date")
+VALUES (personid2,clid,TO_DATE('2018-02-01','YYYY-MM-DD'),TO_DATE('2024-02-01','YYYY-MM-DD'),CURRENT_TIMESTAMP);
+
+INSERT INTO "USER" ("file_id","person_id","tag","password","created_date")
+VALUES(NULL,personid2,'$' || personid2,'1396',CURRENT_TIMESTAMP) RETURNING "id" INTO userid2;
+
+INSERT INTO "CONNECTION" ("user_id","connected_user_id","created_date") VALUES (personid,personid2,CURRENT_TIMESTAMP);
+
+INSERT INTO "CONNECTION" ("user_id","connected_user_id","created_date") VALUES (personid2,personid,CURRENT_TIMESTAMP);
+
+INSERT INTO "GROUP" ("user_id","file_id","name","about","taglist","created_date") 
+VALUES (userid,NULL,'Programming Enjoyers','We program','programming,engineering',CURRENT_TIMESTAMP) RETURNING "id" INTO groupid;
+
+INSERT INTO "USER_GROUP" ("group_id","user_id","created_date") 
+VALUES (groupid,userid,CURRENT_TIMESTAMP);
+
+INSERT INTO "USER_GROUP" ("group_id","user_id","created_date") 
+VALUES (groupid,userid2,CURRENT_TIMESTAMP);
+
+INSERT INTO "GROUP" ("user_id","file_id","name","about","taglist","created_date") 
+VALUES (userid2,NULL,'Gaming Enjoyers','We game','gaming,lol,ow',CURRENT_TIMESTAMP) RETURNING "id" INTO groupid;
+
+INSERT INTO "USER_GROUP" ("group_id","user_id","created_date") 
+VALUES (groupid,userid,CURRENT_TIMESTAMP);
+
+INSERT INTO "USER_GROUP" ("group_id","user_id","created_date") 
+VALUES (groupid,userid2,CURRENT_TIMESTAMP);
+
+INSERT INTO "GROUP" ("user_id","file_id","name","about","taglist","created_date") 
+VALUES (userid,NULL,'MATH GSU CENG 2018','We math','math,linearalgebra,logic',CURRENT_TIMESTAMP) RETURNING "id" INTO groupid;
+
+INSERT INTO "USER_GROUP" ("group_id","user_id","created_date") 
+VALUES (groupid,userid,CURRENT_TIMESTAMP);
+
+INSERT INTO "GROUP" ("user_id","file_id","name","about","taglist","created_date") 
+VALUES (userid2,NULL,'PHYSICS GSU CENG 2018','Hi','physics,circuits,quantum',CURRENT_TIMESTAMP) RETURNING "id" INTO groupid;
+
+INSERT INTO "USER_GROUP" ("group_id","user_id","created_date") 
+VALUES (groupid,userid2,CURRENT_TIMESTAMP);
+
+END $$;
