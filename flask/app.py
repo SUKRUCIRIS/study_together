@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import query
 from flask_cors import CORS
+from psycopg2 import Binary
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "studytogether"
@@ -113,7 +114,7 @@ def addfile_flask():
     data = jsonData["data"]
     query_str = f"""
 	INSERT INTO "FILE" ("name","data","created_date") 
-    VALUES ('{name}','{data}',CURRENT_TIMESTAMP) RETURNING "id"
+    VALUES ('{name}',{Binary(data)},CURRENT_TIMESTAMP) RETURNING "id"
 	"""
     id = qh.query(query_str)[0][0]
     return jsonify({"id": id})
@@ -127,7 +128,7 @@ def addfilegroup_flask():
     data = jsonData["data"]
     query_str = f"""
 	INSERT INTO "FILE" ("group_id","name","data","created_date") 
-    VALUES ({group_id},'{name}','{data}',CURRENT_TIMESTAMP) 
+    VALUES ({group_id},'{name}',{Binary(data)},CURRENT_TIMESTAMP) 
     RETURNING "id"
 	"""
     id = qh.query(query_str)[0][0]
@@ -271,7 +272,7 @@ def addhsuser_flask():
 	"""
     person_id = qh.query(query_str)[0][0]
     query_str = f"""
-	INSER INTO "PERSON_HIGHSCHOOL" ("person_id","highschool_id",
+	INSERT INTO "PERSON_HIGHSCHOOL" ("person_id","highschool_id",
     "hs_start_date","hs_finish_date","created_date")
     VALUES ({person_id},{highschool_id},'{start_date}','{finish_date}',
     CURRENT_TIMESTAMP) RETURNING "id"
@@ -293,7 +294,7 @@ def addcluser_flask():
 	"""
     person_id = qh.query(query_str)[0][0]
     query_str = f"""
-	INSER INTO "PERSON_COLLEGE" ("person_id","college_id",
+	INSERT INTO "PERSON_COLLEGE" ("person_id","college_id",
     "cl_start_date","cl_finish_date","created_date")
     VALUES ({person_id},{college_id},'{start_date}','{finish_date}',
     CURRENT_TIMESTAMP) RETURNING "id"
