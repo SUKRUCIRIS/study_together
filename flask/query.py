@@ -21,6 +21,7 @@ class query_helper:
         q_str = q_str.replace("None,", "NULL,")
         q_str = q_str.replace(",None", ",NULL")
         i = 0
+        print(f"Query: {q_str}")
         while (
             i < 5
         ):  # try to reconnect 5 time, if the connection between database and app is dropped
@@ -43,6 +44,9 @@ class query_helper:
                 continue
             break
         try:
-            return self.cur.fetchall()
-        except:
+            x = self.cur.fetchall()
+            print(f"Result: {x}")
+            return x
+        except Exception as e:
+            print(f"Result: None, Exception: {e}")
             return None

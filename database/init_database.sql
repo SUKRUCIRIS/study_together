@@ -56,7 +56,7 @@ CREATE TABLE "FILE" (
 	"id" SERIAL PRIMARY KEY,
 	"group_id" integer,
 	"name" varchar NOT NULL,
-	"data" bytea NOT NULL,
+	"data" varchar NOT NULL,
 	"created_date" timestamp NOT NULL,
 	"deleted_date" timestamp
 );

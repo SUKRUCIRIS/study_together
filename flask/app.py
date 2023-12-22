@@ -1,13 +1,10 @@
 from flask import Flask, request, jsonify
 import query
 from flask_cors import CORS
-from psycopg2 import Binary
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "studytogether"
 CORS(app, resources={r"*": {"origins": "*"}})
-
-qh = query.query_helper()
 
 
 @app.route("/", methods=["POST", "GET"])
@@ -17,14 +14,18 @@ def root_flask():
 
 @app.route("/query", methods=["POST"])
 def query_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     query_param = jsonData["query"]
     return jsonify({"list": qh.query(query_param)})
 
 
 @app.route("/signup", methods=["POST"])
 def signup_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     name = jsonData["name"]
     surname = jsonData["surname"]
     birth_date = jsonData["birth_date"]
@@ -59,6 +60,7 @@ def signup_flask():
 
 @app.route("/getallhs", methods=["POST"])
 def getallhs_flask():
+    qh = query.query_helper()
     query_str = """
 	SELECT "HIGHSCHOOL"."id", "HIGHSCHOOL"."name" FROM "HIGHSCHOOL"
     """
@@ -67,6 +69,7 @@ def getallhs_flask():
 
 @app.route("/getallcl", methods=["POST"])
 def getallcl_flask():
+    qh = query.query_helper()
     query_str = """
 	SELECT "COLLEGE"."id", "COLLEGE"."name" FROM "COLLEGE"
     """
@@ -75,7 +78,9 @@ def getallcl_flask():
 
 @app.route("/addhs", methods=["POST"])
 def addhs_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     name = jsonData["name"]
     telephone = jsonData["telephone"]
     email = jsonData["email"]
@@ -92,7 +97,9 @@ def addhs_flask():
 
 @app.route("/addcl", methods=["POST"])
 def addcl_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     name = jsonData["name"]
     telephone = jsonData["telephone"]
     email = jsonData["email"]
@@ -109,12 +116,14 @@ def addcl_flask():
 
 @app.route("/addfile", methods=["POST"])
 def addfile_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     name = jsonData["name"]
     data = jsonData["data"]
     query_str = f"""
 	INSERT INTO "FILE" ("name","data","created_date") 
-    VALUES ('{name}',{Binary(data)},CURRENT_TIMESTAMP) RETURNING "id"
+    VALUES ('{name}','{data}',CURRENT_TIMESTAMP) RETURNING "id"
 	"""
     id = qh.query(query_str)[0][0]
     return jsonify({"id": id})
@@ -122,13 +131,15 @@ def addfile_flask():
 
 @app.route("/addfilegroup", methods=["POST"])
 def addfilegroup_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     group_id = jsonData["group_id"]
     name = jsonData["name"]
     data = jsonData["data"]
     query_str = f"""
 	INSERT INTO "FILE" ("group_id","name","data","created_date") 
-    VALUES ({group_id},'{name}',{Binary(data)},CURRENT_TIMESTAMP) 
+    VALUES ({group_id},'{name}','{data}',CURRENT_TIMESTAMP) 
     RETURNING "id"
 	"""
     id = qh.query(query_str)[0][0]
@@ -137,7 +148,9 @@ def addfilegroup_flask():
 
 @app.route("/signin", methods=["POST"])
 def signin_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     email = jsonData["email"]
     password = jsonData["password"]
     query_str = f"""
@@ -155,7 +168,9 @@ def signin_flask():
 
 @app.route("/getuser", methods=["POST"])
 def getuser_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     id = jsonData["id"]
     query_str = f"""
 	SELECT "PERSON"."name", "PERSON"."surname", "PERSON"."birth_date", 
@@ -200,7 +215,9 @@ def getuser_flask():
 
 @app.route("/getfile", methods=["POST"])
 def getfile_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     id = jsonData["id"]
     query_str = f"""
 	SELECT "FILE"."group_id", "FILE"."name", "FILE"."data" 
@@ -213,7 +230,9 @@ def getfile_flask():
 
 @app.route("/geths", methods=["POST"])
 def geths_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     id = jsonData["id"]
     query_str = f"""
 	SELECT "HIGHSCHOOL"."name", "HIGHSCHOOL"."telephone", 
@@ -226,7 +245,9 @@ def geths_flask():
 
 @app.route("/getcl", methods=["POST"])
 def getcl_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     id = jsonData["id"]
     query_str = f"""
 	SELECT "COLLEGE"."name", "COLLEGE"."telephone", 
@@ -239,7 +260,9 @@ def getcl_flask():
 
 @app.route("/getconnections", methods=["POST"])
 def getconnections_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     id = jsonData["id"]
     query_str = f"""
     SELECT "CONNECTION"."connected_user_id" FROM "CONNECTION"
@@ -250,7 +273,9 @@ def getconnections_flask():
 
 @app.route("/getgroups", methods=["POST"])
 def getgroups_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     id = jsonData["id"]
     query_str = f"""
 	SELECT "USER_GROUP"."group_id" FROM "USER_GROUP" WHERE
@@ -261,7 +286,9 @@ def getgroups_flask():
 
 @app.route("/addhsuser", methods=["POST"])
 def addhsuser_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     user_id = jsonData["user_id"]
     highschool_id = jsonData["highschool_id"]
     start_date = jsonData["start_date"]
@@ -283,7 +310,9 @@ def addhsuser_flask():
 
 @app.route("/addcluser", methods=["POST"])
 def addcluser_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     user_id = jsonData["user_id"]
     college_id = jsonData["college_id"]
     start_date = jsonData["start_date"]
@@ -305,7 +334,9 @@ def addcluser_flask():
 
 @app.route("/getgroupinfo", methods=["POST"])
 def getgroupinfo_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     id = jsonData["id"]
     query_str = f"""
 	SELECT "GROUP"."user_id", "GROUP"."file_id", "GROUP"."name",
@@ -325,7 +356,9 @@ def getgroupinfo_flask():
 
 @app.route("/gettextchannels", methods=["POST"])
 def gettextchannels_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     id = jsonData["id"]
     query_str = f"""
 	SELECT "TEXT_CHANNEL"."id", "TEXT_CHANNEL"."name" FROM 
@@ -336,7 +369,9 @@ def gettextchannels_flask():
 
 @app.route("/getvoicechannels", methods=["POST"])
 def getvoicechannels_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     id = jsonData["id"]
     query_str = f"""
 	SELECT "VOICE_CHANNEL"."id", "VOICE_CHANNEL"."name" FROM 
@@ -347,7 +382,9 @@ def getvoicechannels_flask():
 
 @app.route("/gettextchannelmessages", methods=["POST"])
 def gettextchannelmessages_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     id = jsonData["id"]
     query_str = f"""
 	SELECT "MESSAGE"."user_id", "MESSAGE"."data","MESSAGE"."file_id",
@@ -359,7 +396,9 @@ def gettextchannelmessages_flask():
 
 @app.route("/getdirectmessages", methods=["POST"])
 def getdirectmessages_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     id = jsonData["id"]
     query_str = f"""
 	SELECT "DIRECT_MESSAGE"."user_id", "DIRECT_MESSAGE"."data",
@@ -372,7 +411,9 @@ def getdirectmessages_flask():
 
 @app.route("/addconnection", methods=["POST"])
 def addconnection_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     user_id1 = jsonData["user_id1"]
     user_id2 = jsonData["user_id2"]
     query_str = f"""
@@ -392,7 +433,9 @@ def addconnection_flask():
 
 @app.route("/addusertogroup", methods=["POST"])
 def addusertogroup_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     user_id = jsonData["user_id"]
     group_id = jsonData["group_id"]
     query_str = f"""
@@ -405,7 +448,9 @@ def addusertogroup_flask():
 
 @app.route("/addgroupmessage", methods=["POST"])
 def addgroupmessage_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     user_id = jsonData["user_id"]
     tc_id = jsonData["tc_id"]
     data = jsonData["data"]
@@ -421,7 +466,9 @@ def addgroupmessage_flask():
 
 @app.route("/addconnectionmessage", methods=["POST"])
 def addconnectionmessage_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     user_id = jsonData["user_id"]
     connection_id = jsonData["connection_id"]
     data = jsonData["data"]
@@ -437,7 +484,9 @@ def addconnectionmessage_flask():
 
 @app.route("/addgroup", methods=["POST"])
 def addgroup_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     user_id = jsonData["user_id"]
     file_id = jsonData["file_id"]
     name = jsonData["name"]
@@ -454,7 +503,9 @@ def addgroup_flask():
 
 @app.route("/addtextchannel", methods=["POST"])
 def addtextchannel_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     group_id = jsonData["group_id"]
     name = jsonData["name"]
     query_str = f"""
@@ -467,7 +518,9 @@ def addtextchannel_flask():
 
 @app.route("/addvoicechannel", methods=["POST"])
 def addvoicechannel_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     group_id = jsonData["group_id"]
     name = jsonData["name"]
     query_str = f"""
@@ -480,7 +533,9 @@ def addvoicechannel_flask():
 
 @app.route("/getgroupfiles", methods=["POST"])
 def getgroupfiles_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     id = jsonData["id"]
     query_str = f"""
 	SELECT "FILE"."id" FROM "FILE" WHERE "FILE"."group_id"={id}
@@ -490,7 +545,9 @@ def getgroupfiles_flask():
 
 @app.route("/getgroupusers", methods=["POST"])
 def getgroupusers_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     id = jsonData["id"]
     query_str = f"""
 	SELECT "USER_GROUP"."user_id" WHERE "USER_GROUP"."group_id"={id}
@@ -500,7 +557,9 @@ def getgroupusers_flask():
 
 @app.route("/getgrouptests", methods=["POST"])
 def getgrouptests_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     id = jsonData["id"]
     query_str = f"""
 	SELECT "TEST"."id" FROM "TEST" WHERE "TEST"."group_id"={id}
@@ -510,7 +569,9 @@ def getgrouptests_flask():
 
 @app.route("/gettest", methods=["POST"])
 def gettest_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     id = jsonData["id"]
     query_str = f"""
 	SELECT "TEST"."group_id", "TEST"."user_id", "TEST"."name", 
@@ -528,7 +589,9 @@ def gettest_flask():
 
 @app.route("/addtest", methods=["POST"])
 def addtest_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     group_id = jsonData["group_id"]
     user_id = jsonData["user_id"]
     name = jsonData["name"]
@@ -543,7 +606,9 @@ def addtest_flask():
 
 @app.route("/gettestquestions", methods=["POST"])
 def gettestquestions_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     id = jsonData["id"]
     query_str = f"""
 	SELECT "QUESTION"."id" FROM "QUESTION" WHERE 
@@ -554,7 +619,9 @@ def gettestquestions_flask():
 
 @app.route("/getquestion", methods=["POST"])
 def getquestion_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     id = jsonData["id"]
     query_str = f"""
 	SELECT "QUESTION"."body", "QUESTION"."a", "QUESTION"."b",
@@ -578,7 +645,9 @@ def getquestion_flask():
 
 @app.route("/addquestion", methods=["POST"])
 def addquestion_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     test_id = jsonData["test_id"]
     body = jsonData["body"]
     a = jsonData["a"]
@@ -600,7 +669,9 @@ def addquestion_flask():
 
 @app.route("/addscore", methods=["POST"])
 def addscore_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     test_id = jsonData["test_id"]
     user_id = jsonData["user_id"]
     score = jsonData["score"]
@@ -615,7 +686,9 @@ def addscore_flask():
 
 @app.route("/getscores", methods=["POST"])
 def getscores_flask():
+    qh = query.query_helper()
     jsonData = request.get_json()
+    print(f"Request: {jsonData}")
     test_id = jsonData["test_id"]
     user_id = jsonData["user_id"]
     query_str = f"""
@@ -628,6 +701,7 @@ def getscores_flask():
 
 @app.route("/getallgroups", methods=["POST"])
 def getallgroups_flask():
+    qh = query.query_helper()
     query_str = f"""
 	SELECT "GROUP"."id" FROM "GROUP"
 	"""
@@ -638,4 +712,4 @@ if __name__ == "__main__":
     from waitress import serve
 
     print("Flask started to serve.")
-    serve(app, host="0.0.0.0", port=80)
+    serve(app, host="0.0.0.0", port=80, threads=100)
