@@ -1,5 +1,14 @@
 # electron cross platform study together desktop app
 
-## How to run backend and database?
+## How to run backend, database and sudio chat?
 
-There is a docker compose file in the flask directory. Run `docker compose up` in it.
+```
+docker-compose up
+```
+
+## How to run images in kubernetes cluster?
+
+```
+docker-compose build
+kubectl apply -R -f ./kubernetes_files/
+```

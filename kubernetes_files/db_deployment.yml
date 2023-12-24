@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: deploy-db
+  labels:
+    name: deploy-db
+    app: st-app-db
+spec:
+  serviceName: db
+  replicas: 1
+  selector:
+    matchLabels:
+      name: deploy-db
+      app: st-app-db
+  template:
+    metadata:
+      name: deploy-db
+      labels:
+        name: deploy-db
+        app: st-app-db
+    spec:
+      containers:
+        - name: deploy-db
+          image: "postgres-app:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432

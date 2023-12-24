@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-flask
+  labels:
+    name: deploy-flask
+    app: st-app-flask
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: deploy-flask
+      app: st-app-flask
+  template:
+    metadata:
+      name: deploy-flask
+      labels:
+        name: deploy-flask
+        app: st-app-flask
+    spec:
+      containers:
+        - name: deploy-flask
+          image: "flask-app:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              memory: 1024Mi
+              cpu: "1"
+            requests:
+              memory: 64Mi
+              cpu: "0.1"

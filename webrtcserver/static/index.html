@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Study Together Audio Chat</title>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="../easyrtc/easyrtc.js"></script>
+    <script type="text/javascript" src="js/demo_audio_only.js"></script>
+
+    <style type="text/css">
+      html {
+        text-align: center;
+        background-color: cadetblue;
+        color: white;
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+        font-size: medium;
+      }
+      button {
+        cursor: pointer;
+        text-align: center;
+        background-color: white;
+        color: black;
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+        font-size: medium;
+      }
+      button:disabled {
+        color: gray;
+      }
+      #demoContainer {
+        text-align: center;
+        align-self: center;
+      }
+      #connectControls {
+        text-align: center;
+        align-self: center;
+        width: 250px;
+        border: 2px solid whitesmoke;
+        margin: auto;
+      }
+      #otherClients {
+        height: 200px;
+        overflow-y: auto;
+      }
+      #callerAudio {
+        display: none;
+        height: 10em;
+        width: 10em;
+        margin-left: 10px;
+      }
+      #acceptCallBox {
+        display: none;
+        z-index: 2;
+        text-align: center;
+        top: 100px;
+        left: 400px;
+        border: red solid 2px;
+        background-color: pink;
+        padding: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main">
+        <h1>Study Together Audio Chat</h1>
+
+        <h2>Demo</h2>
+
+        <div id="demoContainer">
+          <div id="connectControls">
+            <button id="connectButton" onclick="connect()">Connect</button>
+            <button id="hangupButton" disabled="disabled" onclick="hangup()">
+              Hangup
+            </button>
+            <div id="iam">Not yet connected...</div>
+            <br />
+            <strong>Connected users:</strong>
+            <div id="otherClients"></div>
+          </div>
+
+          <div id="videos">
+            <video
+              id="callerAudio"
+              autoplay="autoplay"
+              playsinline="playsinline"
+            ></video>
+            <div id="acceptCallBox">
+              <div id="acceptCallLabel"></div>
+              <button id="callAcceptButton">Accept</button>
+              <button id="callRejectButton">Reject</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
