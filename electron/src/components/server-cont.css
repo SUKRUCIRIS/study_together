@@ -1,0 +1,26 @@
+.server-cont-server-cont {
+  display: flex;
+  position: relative;
+  align-self: stretch;
+  align-items: center;
+  margin-left: var(--dl-space-space-halfunit);
+  margin-right: var(--dl-space-space-halfunit);
+  padding-left: var(--dl-space-space-halfunit);
+  padding-right: var(--dl-space-space-halfunit);
+  justify-content: flex-start;
+}
+.server-cont-navlink {
+  display: contents;
+}
+.server-cont-image {
+  width: 63px;
+  height: 42px;
+  box-shadow: 5px 5px 10px 0px #000000;
+  object-fit: cover;
+  transition: 0.3s;
+  border-radius: var(--dl-radius-radius-roundserver);
+  text-decoration: none;
+}
+.server-cont-image:hover {
+  box-shadow: none;
+}

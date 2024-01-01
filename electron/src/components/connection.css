@@ -1,0 +1,38 @@
+.connection-connection {
+  flex: 0 0 auto;
+  width: 90%;
+  height: auto;
+  display: flex;
+  position: relative;
+  box-shadow: 5px 5px 10px 0px #000000;
+  margin-top: var(--dl-space-space-halfunit);
+  transition: 0.3s;
+  align-items: center;
+  margin-left: var(--dl-space-space-halfunit);
+  padding-top: var(--dl-space-space-halfunit);
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  margin-right: var(--dl-space-space-halfunit);
+  padding-left: var(--dl-space-space-halfunit);
+  margin-bottom: var(--dl-space-space-halfunit);
+  padding-right: var(--dl-space-space-halfunit);
+  padding-bottom: var(--dl-space-space-halfunit);
+  justify-content: flex-start;
+  background-color: var(--dl-color-uygulama-secondrybg);
+}
+.connection-connection:hover {
+  box-shadow: 5px 5px 10px 0px #d4d4d4;
+}
+.connection-connect-icon {
+  width: 39px;
+  height: 28px;
+  align-self: center;
+  margin-left: var(--dl-space-space-unit);
+}
+.connection-connect-name {
+  align-self: center;
+  margin-left: var(--dl-space-space-halfunit);
+}
+
+
+
